@@ -1,6 +1,11 @@
 MockTweet::Application.routes.draw do
 
-  get '/' => 'tweets#index'
+  root 'tweets#index', as: :tweets
+
+  # resources :tweets
+  get 'tweets/:id'   => 'tweets#show', as: :tweet
+  get 'tweets/new'  => 'tweets#new', as: :new_tweet
+  post 'tweets/new' => 'tweets#create'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

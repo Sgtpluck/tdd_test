@@ -1,0 +1,14 @@
+
+<%= form_for @tweet do |f| %>
+  <div class='field'>
+  <%= f.label :body %>
+  <%= f.text_field :body %>
+  </div>
+  <div class='field'>
+    <%= f.label :author %>
+    <%= f.text_field :author %>
+  </div>
+  <div class='action'>
+    <%= f.submit %>
+  </div>
+    <% end %>

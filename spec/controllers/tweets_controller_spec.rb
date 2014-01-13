@@ -15,25 +15,28 @@ describe TweetsController do
     end
 
     it 'loads all the tweets' do
-      create(:tweet)
-      create(:tweet2)
+      tweet = create(:tweet)
+      tweet2 = create(:tweet2)
       get :index
-      expect(assigns(:tweets)).to eq(Tweet.all)
+      expect(assigns(:tweets)).to match_array([tweet, tweet2])
     end
 
-    it 'loads all the tweets in the view' do
-      create(:tweet)
-      create(:tweet2)
+    pending it 'loads all the tweets in the view' do
+      # should this go here? should we even be testing this?
+      tweet = create(:tweet)
+      tweet2 = create(:tweet2)
       get :index
-      expect(response.body).to include("MyString")
-      expect(response.body).to include("MyString2")
+      expect(response.body).to include(tweet.body)
+      expect(response.body).to include(tweet2.body)
     end
   end
 
   describe 'GET#show' do
 
-    pending it 'should be successful' do
-      pending me learning how to write this with factory girl
+    it 'is successful' do
+      tweet = create(:tweet)
+      get :show, id: tweet.id
+      expect(response).to be_successful
     end
   end
 
@@ -42,20 +45,18 @@ describe TweetsController do
       get :new
       expect(response).to be_successful
     end
+  end
 
-    # figure out how to do these next two using FactoryGirl when off the plane
-
+  describe 'POST#create' do 
+    # figure out how to do these two with FactoryGirl
     it 'should create a new tweet' do
-      get :new
-      post 'create', { tweet: { body: 'a body', 
-                                author: 'davida'} }
-      expect(response).to redirect_to(:index)
+      # tweet = build(:tweet)
+      post :create, tweet: { body: 'whatever', author: 'you' }
+      expect(response).to be_redirect
     end
 
     it 'should render the new template if not saved' do
-      get :new
-      post 'create', { tweet: { body: 'a body', 
-                                author: 'davida'} }
+      post :create, tweet: { body: 'your mom' } 
       expect(response).to render_template(:new)
     end
   end
