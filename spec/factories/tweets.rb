@@ -3,11 +3,11 @@
 FactoryGirl.define do
   factory :tweet do
     body "MyString"
-    author "MyString"
+    author "you"
   end
 
   factory :tweet2, class: Tweet do
     body "MyString2"
-    author "MyString2"
+    author "me"
   end
 end

@@ -3,6 +3,7 @@ require 'spec_helper'
 describe TweetsController do
 
   describe 'GET#index' do
+    render_views 
 
     it 'should be successful' do
       get :index
@@ -21,23 +22,44 @@ describe TweetsController do
       expect(assigns(:tweets)).to match_array([tweet, tweet2])
     end
 
-    pending it 'loads all the tweets in the view' do
-      # should this go here? should we even be testing this?
+    it 'loads all the tweets in the view' do
       tweet = create(:tweet)
       tweet2 = create(:tweet2)
       get :index
       expect(response.body).to include(tweet.body)
       expect(response.body).to include(tweet2.body)
     end
+
+     it 'loads all the authors of the tweets in the view' do
+      tweet = create(:tweet)
+      tweet2 = create(:tweet2)
+      get :index
+      expect(response.body).to include(tweet.author)
+      expect(response.body).to include(tweet2.author)
+    end
   end
 
   describe 'GET#show' do
+    render_views
 
     it 'is successful' do
       tweet = create(:tweet)
       get :show, id: tweet.id
       expect(response).to be_successful
     end
+
+    it 'shows the tweet' do
+      tweet = create(:tweet)
+      get :show, id: tweet.id
+      expect(response.body).to include(tweet.body)
+    end
+
+    it 'shows the tweet' do
+      tweet = create(:tweet)
+      get :show, id: tweet.id
+      expect(response.body).to include(tweet.author)
+    end
+
   end
 
   describe 'GET#new' do

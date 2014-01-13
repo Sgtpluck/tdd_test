@@ -1,6 +1,6 @@
-<% @tweets.each_with_index do |tweet, n| %>
-  <%= n+1 %>. <%= tweet.body %><br>
+ <% @tweets.each_with_index do |tweet, n| %>
+   <%= n+1 %>. <%= link_to tweet.body, tweet_path(tweet.id) %><br>
   <%= tweet.author %><br>
-  <% end %>
+  <% end %> 
 
   <%= link_to 'Make a new tweet!', new_tweet_path %>
